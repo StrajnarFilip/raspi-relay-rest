@@ -13,19 +13,20 @@ def hello_world():
 
 @app.route("/led/<int:number>/<state>")
 def led_state(number: int, state: str):
-    led = gpiozero.LED(number)
+    led = gpiozero.LED(number, active_high=False)
     if state == "on":
         led.on()
-        return led.value
     if state == "off":
         led.off()
-        return led.value
     
-    return "State may only be 'on' or 'off'."
+    led_value = led.value
+    led.close()
+    return led_value
 
 @app.route("/led-blink/<int:number>")
 def led_blink(number: int):
-    led = gpiozero.LED(number)
+    led = gpiozero.LED(number, active_high=False)
     blink_duration: int = int(request.args.get("duration", 1))
     led.blink(blink_duration, n = 1)
+    led.close()
     return blink_duration
