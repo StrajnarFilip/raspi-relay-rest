@@ -21,7 +21,7 @@ def led_state(number: int, state: str):
     
     led_value = led.value
     led.close()
-    return led_value
+    return str(led_value)
 
 @app.route("/led-blink/<int:number>")
 def led_blink(number: int):
