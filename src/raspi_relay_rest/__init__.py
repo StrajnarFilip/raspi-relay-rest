@@ -27,6 +27,6 @@ def led_state(number: int, state: str):
 def led_blink(number: int):
     led = gpiozero.LED(number, active_high=False)
     blink_duration: int = int(request.args.get("duration", 1))
-    led.blink(blink_duration, n = 1)
+    led.blink(blink_duration, n = 1, background=False)
     led.close()
     return str(blink_duration)
