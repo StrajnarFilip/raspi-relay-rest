@@ -29,4 +29,4 @@ def led_blink(number: int):
     blink_duration: int = int(request.args.get("duration", 1))
     led.blink(blink_duration, n = 1)
     led.close()
-    return blink_duration
+    return str(blink_duration)
