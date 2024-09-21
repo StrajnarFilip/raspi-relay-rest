@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-from flask import Flask
+from flask import Flask, request
 import gpiozero
 
 app = Flask(__name__)
@@ -22,3 +22,10 @@ def led_state(number: int, state: str):
         return led.value
     
     return "State may only be 'on' or 'off'."
+
+@app.route("/led-blink/<int:number>")
+def led_blink(number: int):
+    led = gpiozero.LED(number)
+    blink_duration: int = int(request.args.get("duration", 1))
+    led.blink(blink_duration, n = 1)
+    return blink_duration
